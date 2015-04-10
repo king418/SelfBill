@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_gravity="center"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="收支："
+                />
+
+        <Spinner
+                android:id="@+id/spn_payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="类型："
+                />
+
+        <Spinner
+                android:id="@+id/spn_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/layout_container"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="子类型："
+                />
+
+        <Spinner
+                android:id="@+id/spn_subtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="金额："
+                />
+
+        <EditText
+                android:id="@+id/et_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择时间："/>
+
+        <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015-04-06"
+                />
+
+        <Button
+                android:id="@+id/btn_timeselect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="buttonClick"
+                android:text="选择时间"/>
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/btn_determine"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:onClick="buttonClick"
+            android:text="确定"
+            />
+
+    <TextView
+            android:id="@+id/sipnnerstyle"
+            android:layout_width="match_parent"
+            android:textSize="30sp"
+            android:background="#fff"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
