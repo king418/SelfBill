@@ -12,10 +12,9 @@ import com.king.bean.Payment;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * User: king
@@ -175,12 +174,19 @@ public class AddBillActivity extends Activity {
                 String subtype = "";
                 String cost_in = "";
                 String date = "";
+                Date nowdate = null;
                 boolean flag = false;
                 if (currentPayment == 0) {
                     payment = payments.get(currentPayment).getPayment();
                     typename = payments.get(currentPayment).getTypes().get(currentType).getTypeName();
                     cost_in = et_money.getText().toString();
                     date = tv_time.getText().toString();
+                    try {
+                        nowdate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    date = new SimpleDateFormat("yyyy-MM-dd").format(nowdate);
                     flag = dbHelper.execData("insert into tb_selfbill (payment,typename,cost_in,date) values (?,?,?,?)",
                             new String[]{payment, typename, cost_in, date});
                 } else if (currentPayment == 1) {
@@ -189,9 +195,16 @@ public class AddBillActivity extends Activity {
                     subtype = payments.get(currentPayment).getTypes().get(currentType).getSubTypes().get(currentSuptype).getSubTypeName();
                     cost_in = "-" + et_money.getText().toString();
                     date = tv_time.getText().toString();
+                    try {
+                        nowdate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    date = new SimpleDateFormat("yyyy-MM-dd").format(nowdate);
                     flag = dbHelper.execData("insert into tb_selfbill (payment,typename,subtype,cost_in,date) values (?,?,?,?,?)",
                             new String[]{payment, typename, subtype, cost_in, date});
                 }
+                et_money.setText("");
                 //Toast.makeText(this,""+flag,Toast.LENGTH_SHORT).show();
                 break;
         }

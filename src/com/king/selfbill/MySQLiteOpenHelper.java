@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     private final static String DB_NAME = "db_selfbill.db";
-    private final static int VERSION = 1;
+    private final static int VERSION = 2;
     public SQLiteDatabase dbConn;
 
     public MySQLiteOpenHelper(Context context) {
@@ -22,7 +22,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists tb_selfbill(_id integer primary key autoincrement , payment , typename,subtype,cost_in,date)");
+        db.execSQL("create table if not exists tb_selfbill(_id integer primary key autoincrement , payment , typename,subtype,cost_in FLOAT,date DATE)");
     }
 
     @Override

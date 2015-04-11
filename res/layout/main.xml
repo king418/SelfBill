@@ -13,6 +13,50 @@
             android:background="#0f0"
             android:text="我的账单"
             />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <Button
+                android:id="@+id/btn_today"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="buttonClick"
+                android:text="今天"
+                />
+        <Button
+                android:id="@+id/btn_week"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="buttonClick"
+                android:text="本周"
+                />
+        <Button
+                android:id="@+id/btn_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="buttonClick"
+                android:text="本月"
+                />
+        <Button
+                android:id="@+id/btn_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="buttonClick"
+                android:text="今年"
+                />
+        <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_all"
+                android:onClick="buttonClick"
+                android:text="全部"
+                />
+    </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
