@@ -8,6 +8,7 @@ import android.widget.ListView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +54,9 @@ public class MainActivity extends Activity {
                 break;
             case R.id.btn_details:
                 Intent intent1 = new Intent(this,DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (Serializable) list);
+                intent1.putExtras(bundle);
                 startActivity(intent1);
                 break;
             case R.id.btn_today:

@@ -1,6 +1,7 @@
 package com.king.selfbill;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -181,30 +182,49 @@ public class AddBillActivity extends Activity {
                     typename = payments.get(currentPayment).getTypes().get(currentType).getTypeName();
                     cost_in = et_money.getText().toString();
                     date = tv_time.getText().toString();
-                    try {
-                        nowdate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    Log.i("","--------->"+cost_in);
+                    if (cost_in == "" || cost_in.equals("")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle("提示：");
+                        builder.setMessage("金额不能为空！！");
+                        builder.setNegativeButton("确定", null);
+                        builder.show();
+                    } else {
+                        try {
+                            nowdate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        date = new SimpleDateFormat("yyyy-MM-dd").format(nowdate);
+                        flag = dbHelper.execData("insert into tb_selfbill (payment,typename,cost_in,date) values (?,?,?,?)",
+                                new String[]{payment, typename, cost_in, date});
+                        et_money.setText("");
                     }
-                    date = new SimpleDateFormat("yyyy-MM-dd").format(nowdate);
-                    flag = dbHelper.execData("insert into tb_selfbill (payment,typename,cost_in,date) values (?,?,?,?)",
-                            new String[]{payment, typename, cost_in, date});
                 } else if (currentPayment == 1) {
                     payment = payments.get(currentPayment).getPayment();
                     typename = payments.get(currentPayment).getTypes().get(currentType).getTypeName();
                     subtype = payments.get(currentPayment).getTypes().get(currentType).getSubTypes().get(currentSuptype).getSubTypeName();
                     cost_in = "-" + et_money.getText().toString();
                     date = tv_time.getText().toString();
-                    try {
-                        nowdate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    if (cost_in == "-" || cost_in.equals("-")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle("提示：");
+                        builder.setMessage("金额不能为空！！");
+                        builder.setNegativeButton("确定", null);
+                        builder.show();
+                    } else {
+                        try {
+                            nowdate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        date = new SimpleDateFormat("yyyy-MM-dd").format(nowdate);
+                        flag = dbHelper.execData("insert into tb_selfbill (payment,typename,subtype,cost_in,date) values (?,?,?,?,?)",
+                                new String[]{payment, typename, subtype, cost_in, date});
+                        et_money.setText("");
                     }
-                    date = new SimpleDateFormat("yyyy-MM-dd").format(nowdate);
-                    flag = dbHelper.execData("insert into tb_selfbill (payment,typename,subtype,cost_in,date) values (?,?,?,?,?)",
-                            new String[]{payment, typename, subtype, cost_in, date});
                 }
-                et_money.setText("");
+
                 //Toast.makeText(this,""+flag,Toast.LENGTH_SHORT).show();
                 break;
         }
