@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.zxing.activity.CaptureActivity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -21,8 +24,10 @@ public class MainActivity extends Activity {
      */
     @ViewInject(R.id.listView_main)
     private ListView listView_main;
+    @ViewInject(R.id.txt)
+    private TextView txt;
     private MySQLiteOpenHelper dbHelper;
-    private List<Map<String,Object>> list;
+    private List<Map<String, Object>> list;
     private ListViewAdapter adapter;
     private String sql;
     private String[] arr;
@@ -34,7 +39,7 @@ public class MainActivity extends Activity {
         ViewUtils.inject(this);
         dbHelper = new MySQLiteOpenHelper(this);
         list = new ArrayList<Map<String, Object>>();
-        adapter = new ListViewAdapter(this,list);
+        adapter = new ListViewAdapter(this, list);
         listView_main.setAdapter(adapter);
         sql = "select * from tb_selfbill order by date(date) desc";
         arr = new String[]{};
@@ -43,17 +48,17 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        reloadListView(sql,arr);
+        reloadListView(sql, arr);
     }
 
     public void buttonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_account:
-                Intent intent = new Intent(this,AddBillActivity.class);
+                Intent intent = new Intent(this, AddBillActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_details:
-                Intent intent1 = new Intent(this,DetailActivity.class);
+                Intent intent1 = new Intent(this, DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("list", (Serializable) list);
                 intent1.putExtras(bundle);
@@ -62,21 +67,23 @@ public class MainActivity extends Activity {
             case R.id.btn_today:
                 sql = "select * from tb_selfbill where date=?";
                 arr = new String[]{getDateString()};
-                reloadListView(sql,arr);
+                reloadListView(sql, arr);
                 break;
             case R.id.btn_week:
                 //sql = "select * from tb_selfbill where ";
                 //arr = new String[]{};
-               // reloadListView(sql,arr);
+                // reloadListView(sql,arr);
+                Intent intent2 = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent2, 200);
                 break;
             case R.id.btn_month:
                 sql = "select * from tb_selfbill where date like ? order by date(date) desc";
-                arr = new String[]{getDateString().substring(0,7)+"%"};
-                reloadListView(sql,arr);
+                arr = new String[]{getDateString().substring(0, 7) + "%"};
+                reloadListView(sql, arr);
                 break;
             case R.id.btn_year:
                 sql = "select * from tb_selfbill where date like ? order by date(date) desc";
-                arr = new String[]{getDateString().substring(0,4)+"%"};
+                arr = new String[]{getDateString().substring(0, 4) + "%"};
                 reloadListView(sql, arr);
                 break;
             case R.id.btn_all:
@@ -87,18 +94,27 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void reloadListView(String sql,String[] arr){
+    private void reloadListView(String sql, String[] arr) {
 
-        List<Map<String,Object>> subList  = dbHelper.selectList(sql,arr);
-        if (subList!=null) {
+        List<Map<String, Object>> subList = dbHelper.selectList(sql, arr);
+        if (subList != null) {
             list.clear();
             list.addAll(subList);
             adapter.notifyDataSetChanged();
         }
     }
 
-    private String getDateString(){
+    private String getDateString() {
         Date date = new Date();
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 200 && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String result = bundle.getString("result");
+            txt.setText(result);
+        }
     }
 }
